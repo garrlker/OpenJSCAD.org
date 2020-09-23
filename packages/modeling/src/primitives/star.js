@@ -1,23 +1,21 @@
-const {EPS} = require('../math/constants')
+const vec2 = require('../maths/vec2')
 
-const vec2 = require('../math/vec2')
-
-const geom2 = require('../geometry/geom2')
+const geom2 = require('../geometries/geom2')
 
 // @see http://www.jdawiseman.com/papers/easymath/surds_star_inner_radius.html
 const getRadiusRatio = (vertices, density) => {
   if (vertices > 0 && density > 1 && density < vertices / 2) {
-    return Math.cos(Math.PI * density / vertices) / Math.cos(Math.PI * (density - 1) / vertices);
+    return Math.cos(Math.PI * density / vertices) / Math.cos(Math.PI * (density - 1) / vertices)
   }
   return 0
 }
 
 const getPoints = (vertices, radius, startAngle, center) => {
-  var a = (Math.PI * 2) / vertices
+  const a = (Math.PI * 2) / vertices
 
-  var points = []
-  for (var i = 0; i < vertices; i++) {
-    let point = vec2.fromAngleRadians(a * i + startAngle)
+  const points = []
+  for (let i = 0; i < vertices; i++) {
+    const point = vec2.fromAngleRadians(a * i + startAngle)
     vec2.scale(point, radius, point)
     vec2.add(point, center, point)
     points.push(point)
@@ -25,7 +23,8 @@ const getPoints = (vertices, radius, startAngle, center) => {
   return points
 }
 
-/** Construct a star from the given options.
+/**
+ * Construct a star in two dimensional space.
  * @see https://en.wikipedia.org/wiki/Star_polygon
  * @param {Object} [options] - options for construction
  * @param {Array} [options.center=[0,0]] - center of star
@@ -34,6 +33,8 @@ const getPoints = (vertices, radius, startAngle, center) => {
  * @param {Number} [options.outerRadius=1] - outer radius of vertices
  * @param {Number} [options.innerRadius=0] - inner radius of vertices, or zero to calculate
  * @param {Number} [options.startAngle=0] - starting angle for first vertice, in radians
+ * @returns {geom2} new 2D geometry
+ * @alias module:modeling/primitives.star
  *
  * @example
  * let star1 = star({vertices: 8, outerRadius: 10}) // star with 8/2 density
@@ -48,10 +49,10 @@ const star = (options) => {
     density: 2,
     startAngle: 0
   }
-  var {center, vertices, outerRadius, innerRadius, density, startAngle} = Object.assign({}, defaults, options)
+  let { center, vertices, outerRadius, innerRadius, density, startAngle } = Object.assign({}, defaults, options)
 
-  if (!Array.isArray(center)) throw new Error('center must be an array')
-  if (center.length < 2) throw new Error('center must contain X and Y values')
+  if (!Number.isFinite(outerRadius)) throw new Error('outerRadius must be a number')
+  if (!Number.isFinite(innerRadius)) throw new Error('innerRadius must be a number')
 
   if (startAngle < 0) throw new Error('startAngle must be positive')
 
@@ -62,18 +63,18 @@ const star = (options) => {
   density = Math.floor(density)
 
   if (innerRadius === 0) {
-    innerRadius = outerRadius * getRadiusRatio(vertices, density);
+    innerRadius = outerRadius * getRadiusRatio(vertices, density)
   }
 
   const centerv = vec2.fromArray(center)
 
-  const outerPoints = getPoints(vertices, outerRadius, startAngle, centerv);
-  const innerPoints = getPoints(vertices, innerRadius, startAngle + Math.PI / vertices, centerv);
+  const outerPoints = getPoints(vertices, outerRadius, startAngle, centerv)
+  const innerPoints = getPoints(vertices, innerRadius, startAngle + Math.PI / vertices, centerv)
 
   const allPoints = []
-  for (var i = 0; i < vertices; i++) {
-    allPoints.push(outerPoints[i]);
-    allPoints.push(innerPoints[i]);
+  for (let i = 0; i < vertices; i++) {
+    allPoints.push(outerPoints[i])
+    allPoints.push(innerPoints[i])
   }
 
   return geom2.fromPoints(allPoints)

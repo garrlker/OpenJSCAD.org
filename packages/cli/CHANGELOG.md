@@ -3,6 +3,66 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.5](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@2.0.0-alpha.4...@jscad/cli@2.0.0-alpha.5) (2020-09-19)
+
+
+### Bug Fixes
+
+* **all:** fix json import ([#675](https://github.com/jscad/OpenJSCAD.org/issues/675)) ([05caf60](https://github.com/jscad/OpenJSCAD.org/commit/05caf60efc3f090313b3e0bddcc0b4f94de67c78))
+
+
+
+
+
+# [2.0.0-alpha.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@2.0.0-alpha.3...@jscad/cli@2.0.0-alpha.4) (2020-09-08)
+
+**Note:** Version bump only for package @jscad/cli
+
+
+
+
+
+# [2.0.0-alpha.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@2.0.0-alpha.2...@jscad/cli@2.0.0-alpha.3) (2020-09-02)
+
+**Note:** Version bump only for package @jscad/cli
+
+
+
+
+
+# [2.0.0-alpha.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@2.0.0-alpha.1...@jscad/cli@2.0.0-alpha.2) (2020-08-24)
+
+**Note:** Version bump only for package @jscad/cli
+
+
+
+
+
+# [2.0.0-alpha.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@2.0.0-alpha.0...@jscad/cli@2.0.0-alpha.1) (2020-08-19)
+
+**Note:** Version bump only for package @jscad/cli
+
+
+
+
+
+# [2.0.0-alpha.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@1.10.0...@jscad/cli@2.0.0-alpha.0) (2020-08-13)
+
+
+### Bug Fixes
+
+* **cli:** fix rebuild geometry for cli ([#583](https://github.com/jscad/OpenJSCAD.org/issues/583)) ([828394d](https://github.com/jscad/OpenJSCAD.org/commit/828394ddb88fc1139b1daf155548aa9fab7de823))
+* **cli:** improved/ added missing formats handling to CLI ([#494](https://github.com/jscad/OpenJSCAD.org/issues/494)) ([caaab97](https://github.com/jscad/OpenJSCAD.org/commit/caaab9765e4d286f740067075a8284fec3e77c39))
+
+
+### Features
+
+* Overhaul and V2 groundwork ([#382](https://github.com/jscad/OpenJSCAD.org/issues/382)) ([5e66632](https://github.com/jscad/OpenJSCAD.org/commit/5e666327a8b50a7fa6baa4bbdfd790d243f8064f))
+
+
+
+
+
 <a name="1.10.0"></a>
 # [1.10.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@1.9.0...@jscad/cli@1.10.0) (2019-01-04)
 

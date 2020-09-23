@@ -1,11 +1,9 @@
 {
   "name": "@jscad/examples",
-  "version": "1.7.2",
+  "version": "2.0.0-alpha.3",
   "description": "example files for OpenJsCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "scripts": {
-    "version": "git add -A ",
-    "postversion": "git push origin master && git push origin master --tags",
     "release-patch": "git checkout master && git pull origin master && npm version patch",
     "release-minor": "git checkout master && git pull origin master && npm version minor",
     "release-major": "git checkout master && git pull origin master && npm version major",
@@ -26,15 +24,6 @@
     }
   ],
   "license": "MIT",
-  "devDependencies": {
-  },
-  "eslintConfig": {
-    "extends": "standard",
-    "rules": {
-      "semi": "off",
-      "no-undef": "off"
-    }
-  },
   "collective": {
     "type": "opencollective",
     "url": "https://opencollective.com/openjscad",

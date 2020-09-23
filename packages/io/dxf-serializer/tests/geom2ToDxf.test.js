@@ -1,12 +1,12 @@
 const test = require('ava')
 
-const { geometry, primitives } = require('@jscad/modeling')
+const { geometries, primitives } = require('@jscad/modeling')
 
 const { serialize } = require('../index.js')
 const { dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects } = require('../autocad_AC2017')
 
-test('2D GEOMETRY to DXF LWPOLYLINE', t => {
-  const cag1 = geometry.geom2.create()
+test('2D GEOMETRY to DXF LWPOLYLINE', (t) => {
+  const cag1 = geometries.geom2.create()
   t.is(cag1.sides.length, 0)
 
   const obs1 = serialize({}, cag1)
@@ -29,8 +29,8 @@ test('2D GEOMETRY to DXF LWPOLYLINE', t => {
   t.deepEqual(obs4, exp4)
 })
 
-test('2D GEOMETRY to DXF POLYLINE', t => {
-  const cag1 = geometry.geom2.create()
+test('2D GEOMETRY to DXF POLYLINE', (t) => {
+  const cag1 = geometries.geom2.create()
   t.is(cag1.sides.length, 0)
 
   const obs1 = serialize({ geom2To: 'polyline' }, cag1)
@@ -78,10 +78,14 @@ LWPOLYLINE
 CAD00001
   100
 AcDbEntity
+  3
+CAD00001
   8
 0
   67
 0
+  62
+256
   100
 AcDbPolyline
   90
@@ -131,10 +135,14 @@ LWPOLYLINE
 CAD00001
   100
 AcDbEntity
+  3
+CAD00001
   8
 0
   67
 0
+  62
+256
   100
 AcDbPolyline
   90
@@ -184,10 +192,14 @@ LWPOLYLINE
 CAD00001
   100
 AcDbEntity
+  3
+CAD00001
   8
 0
   67
 0
+  62
+256
   100
 AcDbPolyline
   90
@@ -220,10 +232,14 @@ LWPOLYLINE
 CAD00002
   100
 AcDbEntity
+  3
+CAD00002
   8
 0
   67
 0
+  62
+256
   100
 AcDbPolyline
   90
@@ -273,8 +289,12 @@ POLYLINE
 CAD00001
   100
 AcDbEntity
+  3
+CAD00001
   8
 0
+  62
+256
   100
 AcDb2dPolyline
   0

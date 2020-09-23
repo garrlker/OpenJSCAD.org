@@ -1,8 +1,7 @@
-
-const html = require('bel')
+const html = require('nanohtml')
 
 // status display
-module.exports = (state, paramsCallbacktoStream) => {
+const status = (state, paramsCallbacktoStream) => {
   const status = state.status
   const errorMessage = status.error !== undefined && status.error.message ? `${status.error.message}` : ''
   const errorLine = status.error !== undefined && status.error.lineno ? `Line: ${status.error.lineno}` : ''
@@ -33,3 +32,5 @@ module.exports = (state, paramsCallbacktoStream) => {
       </span>
   `
 }
+
+module.exports = status

@@ -1,65 +1,62 @@
 const mat4 = require('gl-mat4')
-const { flatten, toArray } = require('../utils')
-const csgToGeometries = require('./csgToGeometries')
-const cagToGeometries = require('./cagToGeometries')
+
+const { flatten, toArray } = require('@jscad/array-utils')
 const computeBounds = require('../bound-utils/computeBounds')
+const { meshColor } = require('../rendering/renderDefaults')
+
+const geom2ToGeometries = require('./geom2ToGeometries')
+const geom3ToGeometries = require('./geom3ToGeometries')
+const path2ToGeometries = require('./path2ToGeometries')
 
 const entitiesFromSolids = (params, solids) => {
   const defaults = {
-    meshColor: [0, 0.6, 1, 1],
+    color: meshColor,
     smoothNormals: true
   }
-  const { meshColor, smoothNormals } = defaults
-  // const defaultColor = params.rendering.meshColor
+  const { color, smoothNormals } = Object.assign({}, defaults, params)
+
   solids = toArray(solids)
-  // warning !!! fixTJunctions alters the csg and can result in visual issues ??
-  // .fixTJunctions()
-  // cachedSolids = solids
-  // const start = performance.now()
-  const entities = solids.map(function (solid) {
-    let geometry
+  const entities = solids.map((solid) => {
+    let geometries
     let type
-    if ('sides' in solid) {
+    if (!solid) {
+      return null
+    } else if (!(solid instanceof Object)) {
+      return null
+    } else if ('sides' in solid) {
       type = '2d'
-      geometry = cagToGeometries(solid, { color: meshColor })
+      geometries = geom2ToGeometries({ color }, solid)
     } else if ('points' in solid) {
       type = '2d'
-      geometry = cagToGeometries(solid, { color: meshColor })
+      geometries = path2ToGeometries({ color }, solid)
     } else if ('polygons' in solid) {
       type = '3d'
-      geometry = csgToGeometries(solid, {
+      geometries = geom3ToGeometries({
         smoothLighting: smoothNormals,
         normalThreshold: 0.3,
-        faceColor: meshColor })//, normalThreshold: 0})
+        color
+      }, solid)
+    } else {
+      return null
     }
-    // geometry = flatten(geometries)// FXIME : ACTUALLY deal with arrays since a single csg can
-    // generate multiple geometries if positions count is >65535
-    geometry = flatten(geometry)[0]
 
-    // const time = (performance.now() - start) / 1000
-    // console.log(`Total time for geometry conversion: ${time} s`)
-    // console.log('geometry', geometry)
+    // FIXME handle multiple geometries, i.e. when positions count is > 65535
+    const geometry = flatten(geometries)[0]
+    if (!geometry) return null
 
     // bounds
-    const bounds = computeBounds({ geometry })// FXIME : ACTUALLY deal with arrays as inputs see above
+    const bounds = computeBounds(geometry) // FIXME : ACTUALLY deal with arrays as inputs see above
+    if (bounds.dia <= 0.0) return null
 
-    // transforms: for now not used, since all transformed are stored in the geometry
-    // FIXME : for V2 we will be able to use the transfors provided by the solids directly
     const matrix = mat4.copy(mat4.create(), solid.transforms) // mat4.identity([])
-
     const transforms = {
       matrix
-      /* const modelViewMatrix = mat4.multiply(mat4.create(), model, props.camera.view)
-      const normalMatrix = mat4.create()
-      mat4.invert(normalMatrix, modelViewMatrix)
-      mat4.transpose(normalMatrix, normalMatrix)
-      return normalMatrix */
     }
 
     const visuals = {
       drawCmd: 'drawMesh',
       show: true,
-      color: meshColor,
+      // color: meshColor, // overrides colors in geometries
       transparent: geometry.isTransparent, // not sure
       useVertexColors: true
     }
@@ -73,8 +70,7 @@ const entitiesFromSolids = (params, solids) => {
       isTransparent: geometry.isTransparent
     }
     return entity
-  })
-  // }
+  }).filter((entity) => entity !== null)
   return entities
 }
 

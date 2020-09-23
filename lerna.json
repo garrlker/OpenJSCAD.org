@@ -1,19 +1,33 @@
 {
-  "lerna": "3.19.0",
-  "packages": [
-    "packages/core",
-    "packages/modeling",
-    "packages/cli",
-    "packages/desktop",
-    "packages/web",
-    "packages/examples",
-    "packages/io/*",
-    "packages/utils/*"
-  ],
   "version": "independent",
   "command": {
-    "init": {
-      "exact": true
+    "bootstrap": {
+      "ignore": [
+        "@jscad/desktop",
+        "@jscad/gcode-deserializer",
+        "@jscad/scad-deserializer"
+      ]
+    },
+    "version": {
+      "allowBranch": "v2-prerelease",
+      "conventionalCommits": true,
+      "exact": true,
+      "message": "chore(release): publish"
     }
-  }
+  },
+  "packages": [
+    "packages/cli",
+    "packages/core",
+    "packages/desktop",
+    "packages/examples",
+    "packages/io/*",
+    "packages/modeling",
+    "packages/utils/*",
+    "packages/vtree",
+    "packages/web",
+    "packages/most-gestures"
+  ],
+  "ignoreChanges": [
+    "**/*.md"
+  ]
 }

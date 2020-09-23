@@ -1,57 +1,58 @@
+const url = require('url')
 const { fromEvent } = require('most')
 
-function preventDefault (event) {
+const preventDefault = (event) => {
   event.preventDefault()
   return event
 }
 
-function isTextNotEmpty (text) {
-  return text !== ''
-}
+const isTextNotEmpty = (text) => text !== ''
 
-function exists (input) {
-  return input !== null && input !== undefined
-}
+const exists = (input) => (input !== null && input !== undefined)
 
-function pseudoArraytoArray (pseudoArray) {
-  let array = []
-  for (var i = 0; i < pseudoArray.length; i++) {
-    const item = pseudoArray[i]
+const itemListToArray = (list) => {
+  const array = []
+  for (let i = 0; i < list.length; i++) {
+    const item = list[i]
     array.push(item.webkitGetAsEntry ? item.webkitGetAsEntry() : item)
   }
   return array
 }
 
-function extractData (event) {
+const extractData = (event) => {
   if (isTextNotEmpty(event.dataTransfer.getData('url'))) {
     return { type: 'url', data: event.dataTransfer.getData('url') }
   }
   if (event.dataTransfer.types.includes('text/plain')) {
-    return { type: 'text', data: event.dataTransfer.getData('text') }
+    const data = event.dataTransfer.getData('text')
+    try {
+      const parts = new URL(data)
+      return { type: 'url', data: parts.href }
+    } catch {
+      return { type: 'text', data }
+    }
   }
   if (event.dataTransfer.items && event.dataTransfer.items.length > 0) {
-    return { type: 'fileOrFolder', data: pseudoArraytoArray(event.dataTransfer.items) }
+    return { type: 'fileOrFolder', data: itemListToArray(event.dataTransfer.items) }
   }
   return undefined
 }
 
 const makeDragAndDropSideEffect = ({ targetEl }) => {
-  // onst dragOvers$ = DOM.select(':root').events('dragover')
-  // const drops$ = DOM.select(':root').events('drop')
-  function dragEvents (targetEl) {
+  const dragEvents = (targetEl) => {
     const dragOvers$ = fromEvent('dragover', targetEl)
     const drops$ = fromEvent('drop', targetEl)
     return { dragOvers$, drops$ }
   }
 
-  function dragAndDropSource () { // {dragOvers$, drops$}
+  const dragAndDropSource = () => { // {dragOvers$, drops$}
     const { dragOvers$, drops$ } = dragEvents(targetEl)
     drops$.multicast()
     drops$.forEach(preventDefault)
     dragOvers$.forEach(preventDefault)
 
     return drops$
-      .map(event => extractData(event))
+      .map((event) => extractData(event))
       .filter(exists)
       .multicast()
   }

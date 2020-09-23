@@ -1,31 +1,31 @@
 const test = require('ava')
 
-const { geometry, primitives } = require('@jscad/modeling')
+const { geometries, primitives } = require('@jscad/modeling')
 
 const { serialize } = require('../index.js')
 const { dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects } = require('../autocad_AC2017')
 
-test('2D Path to DXF LWPOLYLINE', t => {
-  const path1 = geometry.path2.create()
+test('2D Path to DXF LWPOLYLINE', (t) => {
+  const path1 = geometries.path2.create()
 
   const obs1 = serialize({}, path1)
   const exp1 = [empty]
   t.deepEqual(obs1, exp1)
 
-  let path2 = primitives.arc({ center: [5, 5], endAngle: 45 })
+  const path2 = primitives.arc({ center: [5, 5], endAngle: 45, segments: 16 })
 
   const obs2 = serialize({}, path2)
   const exp2 = [lwpolyline0]
   t.deepEqual(obs2, exp2)
 
-  let path3 = geometry.path2.fromPoints({}, [[10, -20]])
-// TODO
-// path3 = path3.appendBezier([[10, -10], [25, -10], [25, -20]], { resolution: 8 })
-// t.is(path3.points.length, 6)
+  // TODO
+  // const path3 = geometries.path2.fromPoints({}, [[10, -20]])
+  // path3 = path3.appendBezier([[10, -10], [25, -10], [25, -20]], { resolution: 8 })
+  // t.is(path3.points.length, 6)
 
-// const obs3 = serialize({}, [path2, path3])
-// const exp3 = [lwpolyline1]
-// t.deepEqual(obs3, exp3)
+  // const obs3 = serialize({}, [path2, path3])
+  // const exp3 = [lwpolyline1]
+  // t.deepEqual(obs3, exp3)
 
   // TODO test multiple paths
 })
@@ -63,10 +63,14 @@ LWPOLYLINE
 CAD00001
   100
 AcDbEntity
+  3
+CAD00001
   8
 0
   67
 0
+  62
+256
   100
 AcDbPolyline
   90
@@ -78,17 +82,17 @@ AcDbPolyline
   20
 5
   10
-5.943009853363037
+5.943009745777588
   20
-5.332765102386475
+5.33276511140516
   10
-5.778534889221191
+5.778534761263023
   20
-5.627601623535156
+5.627601486219662
   10
-5.525321960449219
+5.525321988817728
   20
-5.850903511047363
+5.850903524534119
   0
 ENDSEC
 ${dxfObjects({})}
@@ -112,10 +116,14 @@ LWPOLYLINE
 CAD00002
   100
 AcDbEntity
+  3
+CAD00002
   8
 0
   67
 0
+  62
+256
   100
 AcDbPolyline
   90
@@ -152,10 +160,14 @@ LWPOLYLINE
 CAD00003
   100
 AcDbEntity
+  3
+CAD00003
   8
 0
   67
 0
+  62
+256
   100
 AcDbPolyline
   90

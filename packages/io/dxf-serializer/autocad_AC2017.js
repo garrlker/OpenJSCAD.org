@@ -1835,8 +1835,6 @@ AcDbLayerTableRecord
 0
  70
 0
- 62
-7
   6
 Continuous
 370
@@ -1861,8 +1859,6 @@ AcDbLayerTableRecord
 View Port
  70
 0
- 62
-7
   6
 Continuous
 290
@@ -1889,8 +1885,6 @@ AcDbLayerTableRecord
 Defpoints
  70
 0
- 62
-7
   6
 Continuous
 290
@@ -2544,36 +2538,6 @@ _ArchTick
   1
 
   0
-LWPOLYLINE
-  5
-239
-330
-238
-100
-AcDbEntity
-  8
-0
-  6
-ByBlock
- 62
-0
-100
-AcDbPolyline
- 90
-2
- 70
-0
- 43
-0.15
- 10
--0.5
- 20
--0.5
- 10
-0.5
- 20
-0.5
-  0
 ENDBLK
   5
 23B
@@ -2691,96 +2655,6 @@ _Open30
 _Open30
   1
 
-  0
-LINE
-  5
-23D
-330
-23C
-100
-AcDbEntity
-  8
-0
-  6
-ByBlock
- 62
-0
-370
--2
-100
-AcDbLine
- 10
--1.0
- 20
-0.26794919
- 30
-0.0
- 11
-0.0
- 21
-0.0
- 31
-0.0
-  0
-LINE
-  5
-23E
-330
-23C
-100
-AcDbEntity
-  8
-0
-  6
-ByBlock
- 62
-0
-370
--2
-100
-AcDbLine
- 10
-0.0
- 20
-0.0
- 30
-0.0
- 11
--1.0
- 21
--0.26794919
- 31
-0.0
-  0
-LINE
-  5
-23F
-330
-23C
-100
-AcDbEntity
-  8
-0
-  6
-ByBlock
- 62
-0
-370
--2
-100
-AcDbLine
- 10
-0.0
- 20
-0.0
- 30
-0.0
- 11
--1.0
- 21
-0.0
- 31
-0.0
   0
 ENDBLK
   5

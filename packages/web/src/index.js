@@ -1,6 +1,8 @@
+const html = require('nanohtml')
 
 const packageMetadata = require('../package.json')
 const keyBindings = require('../data/keybindings.json')
+
 let instances = 0
 
 /** make creator function, to create new jscad instances
@@ -18,8 +20,7 @@ async function makeJscad (targetElement, options) {
   const { name, logging } = Object.assign({}, defaults, options)
 
   // create root dom element
-  const bel = require('bel')
-  const jscadEl = bel`<div class='jscad' key=${name} tabindex=${instances}></div>`
+  const jscadEl = html`<div class='jscad' key=${name} tabindex=${instances}></div>`
   targetElement.appendChild(jscadEl)
 
   // setup all the side effects : ie , input/outputs
@@ -69,11 +70,12 @@ async function makeJscad (targetElement, options) {
     store: storage.source(),
     fs: fs.source(),
     http: http.source(),
+    https: http.source(),
     drops: dragDrop.source(),
     dom: dom.source(),
     solidWorker: solidWorker.source(),
     i18n: i18n.source(),
-    titleBar: titleBar.source(), // #http://openjscad.org/examples/slices/tor.jscad
+    titleBar: titleBar.source(),
     fileDialog: fileDialog.source(),
     dat: await dat.source()
   }
@@ -83,6 +85,7 @@ async function makeJscad (targetElement, options) {
     store: storage.sink,
     fs: fs.sink,
     http: http.sink,
+    https: http.sink,
     i18n: i18n.sink,
     dom: dom.sink,
     solidWorker: solidWorker.sink,
@@ -103,7 +106,7 @@ async function makeJscad (targetElement, options) {
 
   // we return a function to allow setting/modifying params
   const mainParams = require('@jscad/core/observable-utils/callbackToObservable')()
-  mainParams.stream.forEach(x => console.log('setting params', x))
+  // mainParams.stream.forEach(x => console.log('setting params', x))
   return (params) => {
     mainParams.callback(params)
   }

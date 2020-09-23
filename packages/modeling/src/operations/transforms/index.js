@@ -1,4 +1,13 @@
+/**
+ * All shapes (primitives or the results of operations) can be transformed, such as scaled or rotated.
+ * In all cases, the function returns the results, and never changes the original shapes.
+ * @module modeling/transforms
+ * @example
+ * const { center, rotateX, translate } = require('@jscad/modeling').transforms
+ */
 module.exports = {
+  align: require('./align'),
+
   center: require('./center').center,
   centerX: require('./center').centerX,
   centerY: require('./center').centerY,

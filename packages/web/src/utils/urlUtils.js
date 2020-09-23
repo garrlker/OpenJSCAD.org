@@ -1,14 +1,14 @@
 const url = require('url')
 
 const fetchUriParams = (uri, paramName, defaultValue = undefined) => {
-  let params = url.parse(uri, true)
-  let result = params.query
-  if (paramName in result) return result[paramName]
+  const parts = new URL(uri) // parse URL and QUERY
+  if (parts.searchParams.get(paramName)) return parts.searchParams.get(paramName)
   return defaultValue
 }
 
-const getAllUriParams = uri => {
-  return url.parse(uri, true).query
-}
+const getAllUriParams = (uri) => url.parse(uri, true).query
 
-module.exports = {fetchUriParams, getAllUriParams}
+module.exports = {
+  fetchUriParams,
+  getAllUriParams
+}
